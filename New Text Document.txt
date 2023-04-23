@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+<?php
+ 		require("../conncet 1.php");
+
+?>
+
+
+<h1> Quan Ly Customer</h1>
+	
+<table border="1">
+	
+		<tr>
+		  	<td>Id</td>
+			<td>Username</td>
+			<td>Password</td>
+			<td>Name</td>
+			<td>Mobile</td>
+			<td>Address</td>
+			<td>isActive</td>
+			<td>Action</td>
+			<td>Action</td>
+			<td>Action</td>
+		</tr>	
+				
+	
+	
+	
+
+<?php
+		$sql = "Select * from customer";
+		$stmt = $conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $item) 
+		{
+			echo "<tr>";
+				echo "<td>".$item["Id"]."</td>";
+				echo "<td>".$item["Username"]."</td>";
+				echo "<td>".$item["Password"]."</td>";
+				echo "<td>".$item["Name"]."</td>";
+				echo "<td>".$item["Mobile"]."</td>";
+				echo "<td>".$item["Address"]."</td>";
+				echo "<td>".$item["IsActive"]."</td>";
+				
+				$id = $item["Id"];
+				echo "<td> <a href='customer.php?id={$id}' onclick='return check();'>Delete</a></td>";
+				echo "<td> <a href='customerinsert.php'>Insert</a></td>";
+				echo "<td> <a href='customerupdate.php?id={$id}'>Update</a></td>";
+			
+			echo "</tr>";
+		}
+
+
+		if(!empty($_GET["id"]))
+		{
+			$id = $_GET["id"];
+			$sql = "Delete from customer where Id = '{$id}'";
+			$stmt = $conn->prepare($sql);
+			$stmt->execute();
+			header("Locaion:customer.php");
+		}
+	
+	
+	?>
+		<script>
+		function check()
+			{
+				return confirm("Ban thuc su muon xoa");
+			}
+		</script>
+	</table>		
+	
+</body>
+</html>
+
+
